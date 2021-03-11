@@ -11,7 +11,7 @@ debug:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_debug" \
 		   -w /$$(basename $$PWD) \
@@ -24,7 +24,7 @@ ver:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_ver" \
 		   -w /$$(basename $$PWD) \
@@ -38,7 +38,7 @@ fmt:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_fmt" \
 		   -w /$$(basename $$PWD) \
@@ -51,7 +51,7 @@ validate:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_fmt" \
 		   -w /$$(basename $$PWD) \
@@ -65,7 +65,7 @@ plan: clean
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_plan" \
 		   -w /$$(basename $$PWD) \
@@ -81,7 +81,7 @@ _apply:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_apply" \
 		   -w /$$(basename $$PWD) \
@@ -95,7 +95,7 @@ down:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_down" \
 		   -w /$$(basename $$PWD) \
@@ -113,7 +113,7 @@ output.json:
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_output" \
 		   -w /$$(basename $$PWD) \
@@ -146,7 +146,7 @@ init: clean
 		   --env AWS_PROFILE="labs" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
-		   -v $$PWD/creds:/.aws \
+		   -v $$PWD/../creds:/.aws \
 		   --hostname "$$(basename $$PWD)" \
 		   --name "$$(basename $$PWD)_init" \
 		   -w /$$(basename $$PWD) \

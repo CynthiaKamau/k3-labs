@@ -7,5 +7,5 @@ tf/ssh/*
 .idea
 *.out
 plan.out
-tf/creds/credentials
+creds/credentials
 output.json
