@@ -1,0 +1,8 @@
+name             = "k3s-lab"
+key_name         = "lab-key"
+private_key_path = "./ssh/id_rsa"
+public_key_path  = "./ssh/id_rsa.pub"
+instance_type    = "t3.micro"
+owner            = "bryan"
+project          = "k3s-lab"
+env              = "dev"

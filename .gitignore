@@ -1,0 +1,11 @@
+tmp
+*.tfstate
+*.tfstate*
+tf/ssh/*
+.terraform
+*.backup
+.idea
+*.out
+plan.out
+tf/creds/credentials
+output.json
