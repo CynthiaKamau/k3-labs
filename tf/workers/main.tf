@@ -62,6 +62,7 @@ resource "aws_launch_configuration" "workers" {
   image_id        = data.aws_ami.latest_workers.id
   instance_type   = var.instance_type
   security_groups = [aws_security_group.workers.id]
+  key_name        = aws_key_pair.workers.id
 }
 
 resource "aws_autoscaling_group" "workers" {
