@@ -15,7 +15,7 @@ module "vpc" {
 
 module "bastion" {
   source = "./bastion"
-  vpc    = module.vpc.id
+  vpc    = module.vpc.vpc
   az     = module.vpc.az
 
   name             = var.name
@@ -32,7 +32,7 @@ module "bastion" {
 
 module "workers" {
   source        = "./workers"
-  vpc           = module.vpc.id
+  vpc           = module.vpc.vpc
   az            = module.vpc.az
   zone          = module.vpc.zone
   bastion_sg_id = module.bastion.bastion_sg_id
@@ -51,7 +51,7 @@ module "workers" {
 
 module "control-plane" {
   source        = "./control-plane"
-  vpc           = module.vpc.id
+  vpc           = module.vpc.vpc
   az            = module.vpc.az
   zone          = module.vpc.zone
   bastion_sg_id = module.bastion.bastion_sg_id

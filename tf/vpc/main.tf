@@ -13,6 +13,7 @@ module "tags" {
     comments  = "k3s-labs"
   }
 }
+
 resource "aws_vpc" "k3s_lab" {
   cidr_block           = "10.0.0.0/16"
   tags                 = module.tags.tags

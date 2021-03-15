@@ -15,18 +15,18 @@ data "amazon-ami" "packer_builder" {
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "packer_builder" {
-  ami_name      = format("%s-sandbox-%s", var.name, local.timestamp)
+  ami_name      = format("%s-k3s-agent-%s", var.name, local.timestamp)
   instance_type = "t3.large"
   region        = "eu-west-2"
 
   run_tags = {
     owner = "self"
-    type  = "sandbox-packer-builder"
+    type  = "k3s-agent-packer-builder"
   }
 
   run_volume_tags = {
     owner = "self"
-    type  = "sandbox-packer-volume"
+    type  = "k3s-agent-packer-volume"
   }
 
   source_ami   = data.amazon-ami.packer_builder.id
@@ -34,7 +34,7 @@ source "amazon-ebs" "packer_builder" {
 }
 
 build {
-  name="sandbox-ami-builder"
+  name    = "k3s-agent-ami-builder"
   sources = ["source.amazon-ebs.packer_builder"]
 
   provisioner "file" {

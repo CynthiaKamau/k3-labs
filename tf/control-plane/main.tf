@@ -1,8 +1,8 @@
 module "tags" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git"
-  namespace   = var.name
+  namespace   = "control-plane"
   environment = var.env
-  name        = format("%s.%s", var.name, var.env)
+  name        = var.project
   delimiter   = "_"
 
   tags = {
@@ -86,21 +86,20 @@ resource "aws_key_pair" "control_plane" {
 data "aws_ami" "latest_control_plane" {
   most_recent = true
   owners      = ["self"]
-  name_regex  = "^${var.name}-sandbox-\\d*$"
+  name_regex  = "^${var.name}-k3s-server-\\d*$"
 
   filter {
     name   = "name"
-    values = ["${var.name}-sandbox-*"]
+    values = ["${var.name}-k3s-server-*"]
   }
 }
 
 resource "aws_instance" "control_plane" {
-  ami                         = data.aws_ami.latest_control_plane.id
-  instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.control_plane.id
-  vpc_security_group_ids      = [aws_security_group.control_plane.id]
-  key_name                    = aws_key_pair.control_plane.id
-  associate_public_ip_address = false
+  ami                    = data.aws_ami.latest_control_plane.id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.control_plane.id
+  vpc_security_group_ids = [aws_security_group.control_plane.id]
+  key_name               = aws_key_pair.control_plane.id
 
   root_block_device {
     volume_size = 100
@@ -112,8 +111,8 @@ resource "aws_instance" "control_plane" {
 
 resource "aws_route53_record" "control_plane" {
   zone_id = var.zone.zone_id
-  name    = format("%s.%s", "cp", var.zone.name)
   type    = "A"
+  name    = format("%s.%s", "cp", var.zone.name)
   ttl     = "300"
   records = [aws_instance.control_plane.private_ip]
 }

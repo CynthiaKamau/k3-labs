@@ -49,11 +49,11 @@ resource "aws_key_pair" "workers" {
 data "aws_ami" "latest_workers" {
   most_recent = true
   owners      = ["self"]
-  name_regex  = "^${var.name}-sandbox-\\d*$"
+  name_regex  = "^${var.name}-k3s-agent-\\d*$"
 
   filter {
     name   = "name"
-    values = ["${var.name}-sandbox-*"]
+    values = ["${var.name}-k3s-agent-*"]
   }
 }
 
@@ -68,9 +68,9 @@ resource "aws_autoscaling_group" "workers" {
   name                      = "workers"
   max_size                  = 5
   min_size                  = 3
-  health_check_grace_period = 300
-  health_check_type         = "EC2"
   desired_capacity          = 3
+  health_check_type         = "EC2"
+  health_check_grace_period = 300
   force_delete              = true
   vpc_zone_identifier       = [aws_subnet.workers.id]
   launch_configuration      = aws_launch_configuration.workers.name
@@ -115,4 +115,3 @@ resource "aws_autoscaling_group" "workers" {
     create_before_destroy = true
   }
 }
-

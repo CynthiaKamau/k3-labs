@@ -6,7 +6,7 @@ output "az" {
   value = data.aws_availability_zones.azs.names
 }
 
-output "id" {
+output "vpc" {
   value = aws_vpc.k3s_lab
 }
 

@@ -1,8 +1,8 @@
 module "tags" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git"
-  namespace   = var.name
+  namespace   = "bastion"
   environment = var.env
-  name        = format("%s.%s", var.name, var.env)
+  name        = var.project
   delimiter   = "_"
 
   tags = {
@@ -26,9 +26,6 @@ resource "aws_subnet" "bastion" {
 variable "ing" {
   type = list(any)
   default = [
-    { from = 80, to = 80 },
-    { from = 8080, to = 8080 },
-    { from = 443, to = 443 },
     { from = 22, to = 22 }
   ]
 }
