@@ -30,12 +30,13 @@ module "bastion" {
   aws_region       = var.region
 }
 
-module "workers" {
-  source        = "./workers"
+module "control-plane" {
+  source        = "./control-plane"
   vpc           = module.vpc.vpc
   az            = module.vpc.az
   zone          = module.vpc.zone
   bastion_sg_id = module.bastion.bastion_sg_id
+  workers_sg_id = module.workers.workers_sg_id
 
   name             = var.name
   owner            = var.owner
@@ -49,13 +50,13 @@ module "workers" {
   aws_region       = var.region
 }
 
-module "control-plane" {
-  source        = "./control-plane"
+module "workers" {
+  source        = "./workers"
+  depends_on    = [module.vpc.dns_record]
   vpc           = module.vpc.vpc
   az            = module.vpc.az
   zone          = module.vpc.zone
   bastion_sg_id = module.bastion.bastion_sg_id
-  workers_sg_id = module.workers.workers_sg_id
 
   name             = var.name
   owner            = var.owner

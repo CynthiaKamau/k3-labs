@@ -4,7 +4,7 @@ sudo usermod -aG docker ubuntu
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 curl -sfL https://get.k3s.io | \
         K3S_TOKEN=wibble \
-        K3S_URL=https://k3s.lab:6443 \
+        K3S_URL=https://cp.k3s.lab:6443 \
         INSTALL_K3S_CHANNEL=latest \
         INSTALL_K3S_SKIP_START=true \
         sh -
