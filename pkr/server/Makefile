@@ -14,7 +14,7 @@ shell:
 		bryandollery/terraform-packer-aws-alpine
 
 pack:
-	docker container run -it --rm \
+	time -p docker container run -it --rm \
 		--env AWS_PROFILE=labs \
 		-v $$PWD/../../creds:/root/.aws \
 		-v /var/run/docker.sock:/var/run/docker.sock \
