@@ -14,7 +14,7 @@ curl -sfL https://get.k3s.io | \
         K3S_TOKEN=wibble \
         INSTALL_K3S_CHANNEL=latest \
         INSTALL_K3S_EXEC="server --disable=traefik" \
-        sh -
+        bash -
 
 sudo chmod a+rw /etc/rancher/k3s/k3s.yaml
 kubectl taint node $(hostname) k3s-controlplane=true:NoSchedule
@@ -40,6 +40,7 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew update
 kubectl krew install get-all change-ns ingress-nginx janitor doctor ns pod-dive pod-inspect pod-lens pod-logs pod-shell podevents service-tree sick-pods view-secret
 
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/BryanDollery/remove-snap/main/remove-snap.sh)"
 
 # Finally, add an alias for kubectl
 echo 'alias k=kubectl' >> .bashrc
