@@ -1,17 +1,6 @@
 variable "name" {
 }
 
-data "amazon-ami" "packer_builder" {
-  filters = {
-    name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20200625"
-    root-device-type    = "ebs"
-    virtualization-type = "hvm"
-  }
-  most_recent = true
-  owners      = ["099720109477"]
-  region      = "eu-west-2"
-}
-
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "packer_builder" {
@@ -29,7 +18,7 @@ source "amazon-ebs" "packer_builder" {
     type  = "k3s-server-packer-volume"
   }
 
-  source_ami   = data.amazon-ami.packer_builder.id
+  source_ami   = "ami-096cb92bb3580c759"
   ssh_username = "ubuntu"
 }
 

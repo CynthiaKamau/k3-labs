@@ -1,7 +1,7 @@
 # Nairobi DevSecOps Bootcamp
-## K3S Server AMI
+## K3S Agent AMI
 
-Make driven packer configuration for the k3s server
+Make driven packer configuration for the k3s agent
 
 ### Usage
 ```
@@ -9,7 +9,7 @@ make
 ```
 
 #### Dependencies
-You must have a file, creds/credentials of the format:
+You must have a file, ../creds/credentials of the format:
 
 ```
 [labs]
