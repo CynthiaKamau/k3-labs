@@ -135,7 +135,7 @@ ip:
 	echo $$(cat output.json | jq '.bastion_ip.value' | xargs)
 
 connect: output.json
-	ssh -i ssh/id_rsa ubuntu@$$(cat output.json | jq '.bastion_ip.value' | xargs)
+	ssh -oStrictHostKeyChecking=no -i ssh/id_rsa ubuntu@$$(cat output.json | jq '.bastion_ip.value' | xargs)
 
 init: clean
 	rm -rf .terraform ssh
