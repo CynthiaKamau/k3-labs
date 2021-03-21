@@ -25,7 +25,7 @@ variable "server_type" {
   default = "t3.micro"
 }
 
-variable "agent_type" {
+variable "worker_type" {
   default = "t3.micro"
 }
 
