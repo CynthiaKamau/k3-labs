@@ -1,9 +1,9 @@
 .PHONY: output plan clean help
 
+up: fmt plan apply
+
 help:
 	@echo "syntax: make <target>\nWhere target is: ver, debug, clean, output, up, fmt, plan, apply, copy, ip, connect, init, test\n\nUses terraform to manage a simple bastion and a more complex k3s cluster"
-
-up: fmt plan apply
 
 debug:
 	docker container run -it --rm \
