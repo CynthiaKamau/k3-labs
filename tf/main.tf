@@ -26,7 +26,7 @@ module "bastion" {
   key_name         = var.key_name
   public_key_path  = var.public_key_path
   private_key_path = var.private_key_path
-  instance_type    = var.instance_type
+  instance_type    = var.bastion_type
   aws_region       = var.region
 }
 
@@ -46,7 +46,7 @@ module "control-plane" {
   key_name         = var.key_name
   public_key_path  = var.public_key_path
   private_key_path = var.private_key_path
-  instance_type    = var.instance_type
+  instance_type    = var.server_type
   aws_region       = var.region
 }
 
@@ -66,6 +66,6 @@ module "workers" {
   key_name         = var.key_name
   public_key_path  = var.public_key_path
   private_key_path = var.private_key_path
-  instance_type    = var.instance_type
+  instance_type    = var.worker_type
   aws_region       = var.region
 }

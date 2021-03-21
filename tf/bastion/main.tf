@@ -60,11 +60,11 @@ resource "aws_key_pair" "bastion" {
 data "aws_ami" "latest_bastion" {
   most_recent = true
   owners      = ["self"]
-  name_regex  = "^${var.name}-sandbox-\\d*$"
+  name_regex  = "^${var.name}-bastion-\\d*$"
 
   filter {
     name   = "name"
-    values = ["${var.name}-sandbox-*"]
+    values = ["${var.name}-bastion-*"]
   }
 }
 
