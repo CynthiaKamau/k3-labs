@@ -1,8 +1,15 @@
 #!/bin/bash
-sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl vim jq git make docker.io unzip
+
+echo "Provisioning K3S server..."
+
+# Basics
+sudo apt update
+sudo apt upgrade
+sudo apt install -y curl vim jq git make docker.io unzip
 sudo usermod -aG docker ubuntu
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 
+# Install k3s
 curl -sfL https://get.k3s.io | \
         K3S_TOKEN=wibble \
         INSTALL_K3S_CHANNEL=latest \
@@ -10,4 +17,35 @@ curl -sfL https://get.k3s.io | \
         sh -
 
 sudo chmod a+rw /etc/rancher/k3s/k3s.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/aws/deploy.yaml
+kubectl taint node $(hostname) k3s-controlplane=true:NoSchedule
+
+# Install Helm
+curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+# Install Krew
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz" &&
+  tar zxvf krew.tar.gz &&
+  KREW=./krew-"${OS}_${ARCH}" &&
+  "$KREW" install krew
+)
+
+echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> .bashrc
+
+# Use krew to install kubectl plugins
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+kubectl krew update
+kubectl krew install get-all change-ns ingress-nginx janitor doctor ns pod-dive pod-inspect pod-lens pod-logs pod-shell podevents service-tree sick-pods view-secret
+
+
+# Finally, add an alias for kubectl
+echo 'alias k=kubectl' >> .bashrc
+
+# and tidy up
+rm ~/provision.sh
+
+# Out
+echo "Provisioning K3S server complete"

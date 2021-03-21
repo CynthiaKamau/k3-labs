@@ -1,7 +1,7 @@
 NAME=bryan
 
 default: pack
-
+print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
 shell:
 	docker container run -it --rm \
 		--env AWS_PROFILE=labs \
