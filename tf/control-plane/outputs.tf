@@ -9,3 +9,7 @@ output "control_plane" {
 output "dns_record" {
   value = aws_route53_record.control_plane
 }
+
+output "control_plane_sg_id" {
+  value = aws_security_group.control_plane.id
+}

@@ -30,7 +30,7 @@ module "bastion" {
   aws_region       = var.region
 }
 
-module "control-plane" {
+module "control_plane" {
   source        = "./control-plane"
   vpc           = module.vpc.vpc
   az            = module.vpc.az
@@ -57,6 +57,7 @@ module "workers" {
   az            = module.vpc.az
   zone          = module.vpc.zone
   bastion_sg_id = module.bastion.bastion_sg_id
+  control_plane_sg_id = module.contrl_plane.control_plane_sg_id
 
   name             = var.name
   owner            = var.owner
