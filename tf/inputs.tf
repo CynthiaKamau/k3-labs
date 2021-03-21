@@ -21,7 +21,15 @@ variable "name" {
   description = "A name to be applied to make everything unique and personal"
 }
 
-variable "instance_type" {
+variable "server_type" {
+  default = "t3.micro"
+}
+
+variable "agent_type" {
+  default = "t3.micro"
+}
+
+variable "bastion_type" {
   default = "t3.micro"
 }
 
