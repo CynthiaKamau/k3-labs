@@ -51,13 +51,13 @@ module "control_plane" {
 }
 
 module "workers" {
-  source        = "./workers"
-  depends_on    = [module.vpc.dns_record]
-  vpc           = module.vpc.vpc
-  az            = module.vpc.az
-  zone          = module.vpc.zone
-  bastion_sg_id = module.bastion.bastion_sg_id
-  control_plane_sg_id = module.contrl_plane.control_plane_sg_id
+  source              = "./workers"
+  depends_on          = [module.vpc.dns_record]
+  vpc                 = module.vpc.vpc
+  az                  = module.vpc.az
+  zone                = module.vpc.zone
+  bastion_sg_id       = module.bastion.bastion_sg_id
+  control_plane_sg_id = module.control_plane.control_plane_sg_id
 
   name             = var.name
   owner            = var.owner

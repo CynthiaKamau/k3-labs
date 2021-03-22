@@ -22,60 +22,72 @@ resource "aws_subnet" "control_plane" {
   tags                    = module.tags.tags
 }
 
+resource "aws_security_group_rule" "k8s_kubectl" {
+  type                     = "ingress"
+  from_port                = 6443
+  to_port                  = 6443
+  protocol                 = "TCP"
+  source_security_group_id = var.workers_sg_id
+  security_group_id        = aws_security_group.control_plane.id
+}
+
+resource "aws_security_group_rule" "k8s_1" {
+  type                     = "ingress"
+  from_port                = 8472
+  to_port                  = 8472
+  protocol                 = "UDP"
+  source_security_group_id = var.workers_sg_id
+  security_group_id        = aws_security_group.control_plane.id
+}
+
+resource "aws_security_group_rule" "k8s_2" {
+  type                     = "ingress"
+  from_port                = 10250
+  to_port                  = 10251
+  protocol                 = "TCP"
+  source_security_group_id = var.workers_sg_id
+  security_group_id        = aws_security_group.control_plane.id
+}
+
+resource "aws_security_group_rule" "ssh" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "TCP"
+  source_security_group_id = var.bastion_sg_id
+  security_group_id        = aws_security_group.control_plane.id
+}
+
+resource "aws_security_group_rule" "http" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "TCP"
+  source_security_group_id = var.bastion_sg_id
+  security_group_id        = aws_security_group.control_plane.id
+}
+
+resource "aws_security_group_rule" "https" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "TCP"
+  source_security_group_id = var.bastion_sg_id
+  security_group_id        = aws_security_group.control_plane.id
+}
+
+resource "aws_security_group_rule" "internet" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = -1
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.control_plane.id
+}
+
 resource "aws_security_group" "control_plane" {
   vpc_id = var.vpc.id
   tags   = module.tags.tags
-
-  ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "TCP"
-    security_groups = [var.bastion_sg_id]
-  }
-
-  ingress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "TCP"
-    security_groups = [var.bastion_sg_id]
-  }
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "TCP"
-    security_groups = [var.bastion_sg_id]
-  }
-
-  ingress {
-    from_port       = 6443
-    to_port         = 6443
-    protocol        = "TCP"
-    security_groups = [var.workers_sg_id]
-  }
-
-  ingress {
-    from_port       = 8472
-    to_port         = 8472
-    protocol        = "UDP"
-    security_groups = [var.workers_sg_id]
-    self            = true
-  }
-
-  ingress {
-    from_port       = 10250
-    to_port         = 10250
-    protocol        = "TCP"
-    security_groups = [var.workers_sg_id]
-    self            = true
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 resource "aws_key_pair" "control_plane" {

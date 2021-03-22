@@ -6,6 +6,10 @@ variable "bastion_sg_id" {
   description = "bastion sg"
 }
 
+variable "control_plane_sg_id" {
+  description = "control plane sg"
+}
+
 variable "vpc" {
   description = "the vpc to connect to"
 }
