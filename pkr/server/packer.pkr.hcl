@@ -28,12 +28,17 @@ build {
 
   provisioner "file" {
     destination = "/home/ubuntu/"
-    source      = "./provision.sh"
+    source      = "./prep.sh"
   }
 
   provisioner "file" {
     destination = "/home/ubuntu/"
     source      = "./nginx-ingress-deploy.yaml"
+  }
+
+  provisioner "file" {
+    destination = "/home/ubuntu/"
+    source      = "./provision.sh"
   }
 
   provisioner "shell" {

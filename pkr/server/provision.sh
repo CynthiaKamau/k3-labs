@@ -16,7 +16,7 @@ curl -sfL https://get.k3s.io | \
         INSTALL_K3S_EXEC="server --disable=traefik" \
         bash -
 
-sudo chmod a+rw /etc/rancher/k3s/k3s.yaml
+. prep.sh
 kubectl taint node $(hostname) k3s-controlplane=true:NoSchedule
 
 # Install Helm
@@ -48,10 +48,13 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/BryanDollery/remove-snap
 
 # Finally, add an alias for kubectl
 echo 'alias k=kubectl' >> .bashrc
+echo 'alias less="less -R"' >> .bashrc
+echo 'alias jq="jq -C"' >> .bashrc
 
 # and tidy up
 rm ~/provision.sh
 rm ~/nginx-ingress-deploy.yaml
+mkdir git
 
 # Out
 echo "Provisioning K3S server complete"

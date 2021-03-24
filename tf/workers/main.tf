@@ -87,18 +87,26 @@ resource "aws_launch_configuration" "agents" {
   key_name        = aws_key_pair.agents.id
 }
 
-variable "ports" {
-  type = map(number)
-  default = {
-    http  = 80
-    https = 443
-  }
+resource "aws_route53_record" "agents" {
+  zone_id = var.zone.zone_id
+  type    = "A"
+  name    = format("%s.%s", "api", var.zone.name)
+  ttl     = "300"
+  records = [aws_eip.agents.public_ip]
+}
+
+resource "aws_eip" "agents" {
+  vpc = true
 }
 
 resource "aws_lb" "agents" {
   name               = "basic-load-balancer"
   load_balancer_type = "network"
-  subnets            = [aws_subnet.agents.id]
+
+  subnet_mapping {
+    subnet_id     = aws_subnet.agents.id
+    allocation_id = aws_eip.agents.id
+  }
 }
 
 resource "aws_lb_listener" "agents_80" {
@@ -124,9 +132,8 @@ resource "aws_lb_listener" "agents_443" {
   }
 }
 
-
 resource "aws_lb_target_group" "agents_80" {
-  port     = 80
+  port     = 30000
   protocol = "TCP"
   vpc_id   = var.vpc.id
 
@@ -136,7 +143,7 @@ resource "aws_lb_target_group" "agents_80" {
   }
 
   health_check {
-    path                = "/"
+    path                = "/healthz"
     healthy_threshold   = 10
     unhealthy_threshold = 10
     interval            = 30
@@ -151,7 +158,7 @@ resource "aws_lb_target_group" "agents_80" {
   }
 }
 resource "aws_lb_target_group" "agents_443" {
-  port     = 443
+  port     = 30001
   protocol = "TCP"
   vpc_id   = var.vpc.id
 
@@ -161,7 +168,7 @@ resource "aws_lb_target_group" "agents_443" {
   }
 
   health_check {
-    path                = "/"
+    path                = "/healthz"
     healthy_threshold   = 10
     unhealthy_threshold = 10
     interval            = 30
@@ -209,7 +216,7 @@ resource "aws_autoscaling_group" "agents" {
   }
 
   tag {
-    key                 = "name"
+    key                 = "Name"
     value               = var.name
     propagate_at_launch = true
   }
