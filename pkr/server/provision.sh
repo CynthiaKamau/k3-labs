@@ -22,6 +22,10 @@ kubectl taint node $(hostname) k3s-controlplane=true:NoSchedule
 # Install Helm
 curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
+
+# Install nginx baremetal on ports 30000 and 30001
+kubectl apply -f nginx-ingress-deploy.yaml
+
 # Install Krew
 (
   set -x; cd "$(mktemp -d)" &&
@@ -47,6 +51,7 @@ echo 'alias k=kubectl' >> .bashrc
 
 # and tidy up
 rm ~/provision.sh
+rm ~/nginx-ingress-deploy.yaml
 
 # Out
 echo "Provisioning K3S server complete"

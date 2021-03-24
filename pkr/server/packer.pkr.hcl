@@ -31,6 +31,11 @@ build {
     source      = "./provision.sh"
   }
 
+  provisioner "file" {
+    destination = "/home/ubuntu/"
+    source      = "./nginx-ingress-deploy.yaml"
+  }
+
   provisioner "shell" {
     script = "./provision.sh"
   }
