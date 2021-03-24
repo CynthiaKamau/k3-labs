@@ -1,6 +1,6 @@
 NAME=bryan
 
-default: pack
+default: fmt pack
 
 pack:
 	time -p docker container run -it --rm \
@@ -12,7 +12,7 @@ pack:
 		--name "$$(basename $$PWD)" \
 		-w /$$(basename $$PWD) \
 		--entrypoint="/usr/local/bin/packer" \
-		bryandollery/terraform-packer-aws-alpine build -var="name=$$NAME" packer.pkr.hcl
+		bryandollery/terraform-packer-aws-alpine:14 build -var="name=$$NAME" packer.pkr.hcl
 
 fmt:
 	docker container run -it --rm \
@@ -23,4 +23,4 @@ fmt:
 		--name "$$(basename $$PWD)" \
 		-w /$$(basename $$PWD) \
 		--entrypoint="/usr/local/bin/packer" \
-		bryandollery/terraform-packer-aws-alpine fmt -var="name=$$NAME" packer.pkr.hcl
+		bryandollery/terraform-packer-aws-alpine:14 fmt -var="name=$$NAME" packer.pkr.hcl
