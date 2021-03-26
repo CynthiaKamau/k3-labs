@@ -23,7 +23,7 @@ source "amazon-ebs" "packer_builder" {
 }
 
 build {
-  name="bastion-ami-builder"
+  name    = "bastion-ami-builder"
   sources = ["source.amazon-ebs.packer_builder"]
 
   provisioner "file" {

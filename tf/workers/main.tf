@@ -14,6 +14,33 @@ module "tags" {
   }
 }
 
+resource "tls_private_key" "agents" {
+  algorithm = "RSA"
+}
+
+resource "tls_self_signed_cert" "agents" {
+  key_algorithm         = "RSA"
+  private_key_pem       = tls_private_key.agents.private_key_pem
+  validity_period_hours = 24
+
+  subject {
+    common_name  = "api.k3s.lab"
+    organization = "Chaos Engineers (Kenya)"
+  }
+
+
+  allowed_uses = [
+    "key_encipherment",
+    "digital_signature",
+    "server_auth"
+  ]
+}
+
+resource "aws_acm_certificate" "agents" {
+  private_key      = tls_private_key.agents.private_key_pem
+  certificate_body = tls_self_signed_cert.agents.cert_pem
+}
+
 resource "aws_subnet" "agents" {
   vpc_id                  = var.vpc.id
   cidr_block              = "10.0.3.0/24"
@@ -123,8 +150,10 @@ resource "aws_lb_listener" "agents_80" {
 resource "aws_lb_listener" "agents_443" {
   load_balancer_arn = aws_lb.agents.arn
 
-  protocol = "TCP"
+  protocol = "HTTPS"
   port     = 443
+
+  certificate_arn = aws_acm_certificate.agents.arn
 
   default_action {
     type             = "forward"
