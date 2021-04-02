@@ -1,4 +1,5 @@
 # Chaos Engineers Labs - K3S cluster
+# Build k3lab using packer and deploy with terraform
 
 This repo builds a k3s cluster with one control-plane node and 3 worker-nodes in an autoscaling group. It also creates a bastion for controling the kubernetes cluster.
 
