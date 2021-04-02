@@ -8,7 +8,7 @@ help:
 debug:
 	docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -21,7 +21,7 @@ debug:
 ver:
 	docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -35,7 +35,7 @@ ver:
 fmt:
 	time -p docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -48,7 +48,7 @@ fmt:
 validate:
 	time -p docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -62,7 +62,7 @@ validate:
 plan: clean
 	time -p docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -78,7 +78,7 @@ apply: _apply output.json
 _apply:
 	time -p docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -92,7 +92,7 @@ _apply:
 down:
 	time -p docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -110,7 +110,7 @@ test: copy connect
 output.json:
 	docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \
@@ -143,7 +143,7 @@ init: clean
 	ssh-keygen -t rsa -f ./ssh/id_rsa -q -N ""
 	time -p docker container run -it --rm \
 		   --env TF_NAMESPACE=$$TF_NAMESPACE \
-		   --env AWS_PROFILE="labs" \
+		   --env AWS_PROFILE="shiro" \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
 		   -v $$PWD:/$$(basename $$PWD) \
 		   -v $$PWD/../creds:/.aws \

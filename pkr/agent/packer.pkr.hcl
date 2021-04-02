@@ -4,7 +4,7 @@ variable "name" {
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "packer_builder" {
-  ami_name      = format("%s-k3s-agent-%s", var.name, local.timestamp)
+  ami_name      = format("shiro-k3s-agent-%s", local.timestamp)
   instance_type = "t3.large"
   region        = "eu-west-2"
 

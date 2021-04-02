@@ -1,10 +1,10 @@
-NAME=bryan
+NAME=shiro
 
 default: fmt pack
 
 pack:
 	time -p docker container run -it --rm \
-		--env AWS_PROFILE=labs \
+		--env AWS_PROFILE=shiro \
 		-v $$PWD/../../creds:/root/.aws \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v $$PWD:/$$(basename $$PWD) \

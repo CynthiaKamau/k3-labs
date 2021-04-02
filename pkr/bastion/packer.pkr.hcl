@@ -1,10 +1,12 @@
 variable "name" {
+  type    = string
+  default = "shiro"
 }
 
 locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 
 source "amazon-ebs" "packer_builder" {
-  ami_name      = format("%s-bastion-%s", var.name, local.timestamp)
+  ami_name      = format("shiro-bastion-%s", local.timestamp)
   instance_type = "t3.large"
   region        = "eu-west-2"
 
